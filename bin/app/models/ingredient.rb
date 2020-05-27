@@ -1,8 +1,7 @@
 class Ingredient < ActiveRecord::Base
     belongs_to :recipe
-    has_one :cookbook, through: :recipe
+    # belongs_to :api
     
-
 end
 
 

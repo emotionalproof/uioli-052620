@@ -4,7 +4,7 @@ class Greeting < ActiveRecord::Base
     # =>
     # Do you like Ruby? (Y/n)
 
-    def greeting
+    # def greeting
         #prompts the user for their name to create
 #         And then call ask with the question for simple input:
 
@@ -49,9 +49,9 @@ class Greeting < ActiveRecord::Base
 #    Redo
 #    Exit
 
-    end
+    # end
 
-    def initiate_uioli
+    # def initiate_uioli
         #Great, you currently have _.
         #Now, let's figure out which of these ingredients you must Use Or Lose. 
 #         Also, asking multiple choice questions is a breeze with multi_select:
@@ -80,8 +80,38 @@ class Greeting < ActiveRecord::Base
 
 
 
+    # def recipe_search
+        #Great, you currently have _.
+        #Now, let's figure out which of these ingredients you must Use Or Lose. 
+#         Also, asking multiple choice questions is a breeze with multi_select:
+
+# choices = %w(vodka beer wine whisky bourbon)
+# prompt.multi_select("Select drinks?", choices)
+# # =>
+
+# Select drinks? (Use ↑/↓ arrow keys, press Space to select and Enter to finish)"
+# ‣ ⬡ recipe1
+#   ⬡ recipe2
+#   ⬡ recipe3
+#   ⬡ whisky
+#   ⬡ bourbon
+#When they select the recipes that they want going to have to do a
+#cb = Cookbook.find_or_create_by(user_id: user_id)
+#recipe_name_array.each do |recipe_name|
+#   cb.add_recipe(recipe_name)
+#end
+ 
+#cb.add_cookbook_shopping_list(p_id)
 
 
+
+
+
+    #returns the list of current shopping llist and the current pantry
+#Command CLI. Your current shopping list has [] and your current pantry 
+#has _? We do not see any matches.
+#Or We currently see a match of _. Would you like to remove _ from your
+#shopping list? Y/N
 
 
 
@@ -110,6 +140,6 @@ class Greeting < ActiveRecord::Base
     #redo. If you have to leave, enter: exit.
         
 
-    end
+#     end
 
 end
