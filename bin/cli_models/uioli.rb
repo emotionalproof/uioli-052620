@@ -1,25 +1,16 @@
 require 'pry'
 require "tty-prompt"
-require './pre_search_helpers.rb'
-require './post_search_helpers.rb'
-require './app/models/user.rb'
-require './app/models/pantry_item.rb'
-require './app/models/use_it_or_lose_it.rb'
-require './app/models/search.rb'
-require './app/models/api.rb'
-require './app/models/recipe.rb'
-require './app/models/ingredient.rb'
-require './app/models/cookbook.rb'
-require './app/models/shopping_list.rb'
-
-
-
-
-
-    
-
-
-
+require './bin/cli_models/pre_search_helpers.rb'
+require './bin/cli_models/post_search_helpers.rb'
+require './bin/app/models/user.rb'
+require './bin/app/models/pantry_item.rb'
+require './bin/app/models/use_it_or_lose_it.rb'
+require './bin/app/models/search.rb'
+require './bin/app/models/api.rb'
+require './bin/app/models/recipe.rb'
+require './bin/app/models/ingredient.rb'
+require './bin/app/models/cookbook.rb'
+require './bin/app/models/shopping_list.rb'
 
 
 username = user_name
