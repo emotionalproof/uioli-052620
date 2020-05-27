@@ -3,7 +3,7 @@ class ShoppingList < ActiveRecord::Base
     # has_many :ingredients, through: :cookbook, through: :recipes
     belongs_to :pantryitem
     has_many :recipes, through: :cookbook
-    @@list = nil
+    # @@list = nil
 
 
     def ingredients_array
