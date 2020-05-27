@@ -67,11 +67,11 @@ class Greeting < ActiveRecord::Base
 #   ⬡ whisky
 #   ⬡ bourbon
 
-# #Great, we are ready to search with _. #would you like to proceed or re-select
-# #your items
-# #prompt.select("Choose your destiny?", %w(Scorpion Kano Jax))
-# #
-# # Select drinks? (Use ↑/↓ arrow keys, press Space to select and Enter to finish)"
+# # #Great, we are ready to search with _. #would you like to proceed or re-select
+# # #your items
+# # #prompt.select("Choose your destiny?", %w(Scorpion Kano Jax))
+# # #
+# # # Select drinks? (Use ↑/↓ arrow keys, press Space to select and Enter to finish)"
 # ‣ ⬡ Search. I need to Use It Or Lose It, now!
 #   ⬡ Re-select items
 #     @ let's go back to our pantry
