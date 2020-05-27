@@ -82,16 +82,17 @@ results_array = ["pizza", "omelette", "avocado"]
 # if results_array == []
 
 # else
-    chosen_recipes = select_recipes(results_array)
-    continue = finalize_recipes(chosen_recipes)
-        until continue == true
-            choose_recipes = select_recipes(results_array)
-            continue = finalize_recipes(choose_recipes)
-        end
+    # chosen_recipes = select_recipes(results_array)
+    # continue = finalize_recipes(chosen_recipes)
+    #     until continue == true
+    #         choose_recipes = select_recipes(results_array)
+    #         continue = finalize_recipes(choose_recipes)
+    #     end
 
 # end
+result = cookbook(results_array)
 
-
+puts result
         
 
 
