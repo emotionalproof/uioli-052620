@@ -6,9 +6,9 @@ class Search < ActiveRecord::Base
         self.ingredients.split(", ")
     end
 
-    def narrow_search
+    # def narrow_search
         #search_array = []
-        array = self.ingredients_to_array
+        # array = self.ingredients_to_array
         
         # array.each do |ingredient|
         #API.each do |api|
@@ -18,7 +18,7 @@ class Search < ActiveRecord::Base
         #pull up the values of the ingredients
            #find it any of them == ingredients
              #add that recipe to the search_array
-    end
+    # end
 
     #need a default statement if there are no recipes that match the ingredients.
      #"I'm sorry, but out of _ recipes, none matched your ingredients."

@@ -1,9 +1,9 @@
 class UseItOrLoseIt < ActiveRecord::Base
     belongs_to :pantryitem
 
-    def uoili_ingredients_to_array
-        self.ingredients.split(", ")
-    end
+    # def uoili_ingredients_to_array
+    #     self.ingredients.split(", ")
+    # end
 
 
 end
