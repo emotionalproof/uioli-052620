@@ -7,6 +7,7 @@ def user_name
     " for a username.\n\n         What is your username?")
 end
 
+
 def user_continue(entered_username)
     prompt = TTY::Prompt.new 
     prompt.yes?("\nWelcome, #{entered_username}. \n\nWe see that you have used Use It Or Lose It"\

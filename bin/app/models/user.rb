@@ -9,9 +9,5 @@ class User < ActiveRecord::Base
         end
         cookbook_array_of_hashes
     end
-
-
-
 end
 
-#columns: name
