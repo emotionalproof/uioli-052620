@@ -13,120 +13,139 @@ require './bin/cli_models/post_search_helpers.rb'
 # # require './bin/app/models/shopping_list.rb'
 
 
-# username = user_name
-old_pantry_string = "peanuts, butter, almonds, crackers, cashews, steak, chicken, broccoli"
-whatup = returning_user_pantry(old_pantry_string)
+username = user_name
 
-puts whatup
+if User.find_by(username: username) == true
+    go_on = user_continue(username)
+    until go_on == true
+        username = user_name
+        if User.find_by(username: username) == true
+            go_on = user_continue(username)
+        else
+            go_on = create_username(username)
+        end
+    end
+else
+    go_on = create_username(username)
+    until go_on == true
+        username = user_name
+        if User.find_by(username: username) == true
+            go_on = user_continue(username)
+        else
+            go_on = create_username(username)
+        end
+    end
+end
 
-# t = true
-# x = true
-# # if User.find_by(username: username) == true
-# if t == true
-#     go_on = user_continue(username)
-#     until go_on == true
-#         username = user_name
-#         # if User.find_by(username: username) == true
-#         if x == true
-#             go_on = user_continue(username)
-#         else
-#             go_on = create_username(username)
-#         end
-#     end
-# else
-#     go_on = create_username(username)
-#     until go_on == true
-#         username = user_name
-#         #if User.find_by(username: username) == true
-#         if x == true
-#             go_on = user_continue(username)
-#         else
-#             go_on = create_username(username)
-#         end
-#     end
-# end
+this_user = User.find_or_create_by(username: username)
+this_user_id = this_user.id
 
-# this_user = User.find_by(username: username)
-# this_user_id = this_user.id
+if PantryItem.find_by(user_id: this_user_id)
+    this_pantry = PantryItem.find_by(user_id: this_user_id)
+    pantry_string = this_pantry.ingredients
+    pantry_choices = returning_user_pantry(pantry_string)
+else     
+    pantry_choices = enter_new_pantry
+end
 
-# if PantryItem.find_by(user_id: this_user_id)
-#     this_pantry = PantryItem.find_by(user_id: this_user_id)
-#     pantry_string = this_pantry.ingredients
-#     pantry_choices = returning_user_pantry(pantry_string)
-# else     
-#     pantry_choices = enter_new_pantry
-# end
+choice = check_pantry(pantry_choices)
 
-# choice = check_pantry(pantry_choices)
-
-#     until choice == "Continue"
-#         if choice == "Remove from Pantry"
-#             pantry_choices = remove_from_pantry(pantry_choices)
-#             choice = check_pantry(pantry_choices)
-#         elsif choice == "Add to Pantry"
-#             pantry_choices = add_to_pantry(pantry_choices)
-#             choice = check_pantry(pantry_choices)
-#         elsif choice == "Redo Pantry"    
-#             pantry_choices = enter_new_pantry
-#             choice = check_pantry(pantry_choices)
-#         elsif choice == "Quit"
-#             quit_uioli
-#         end
-#     end
+    until choice == "Continue"
+        if choice == "Remove from Pantry"
+            pantry_choices = remove_from_pantry(pantry_choices)
+            choice = check_pantry(pantry_choices)
+        elsif choice == "Add to Pantry"
+            pantry_choices = add_to_pantry(pantry_choices)
+            choice = check_pantry(pantry_choices)
+        elsif choice == "Redo Pantry"    
+            pantry_choices = enter_new_pantry
+            choice = check_pantry(pantry_choices)
+        elsif choice == "Quit"
+            quit_uioli
+        end
+    end
 
 
-#     uioli_array = select_uioli(pantry_choices)
-#     decision = finalize_uioli(uioli_array)
-#         until decision == "Continue. I need to Use this before I Lose It."
-#             if decision == "Redo Selection"
-#                 uioli_array = select_uioli(pantry_choices)
-#                 decision = finalize_uioli(uioli_array)
-#             elsif decision == "Quit"
-#                 quit_uioli
-#             else 
-#                 uioli_array
-#             end
-#         end
-
-#     pantry = Pantry.find    
-
+    uioli_array = select_uioli(pantry_choices)
+    decision = finalize_uioli(uioli_array)
+        until decision == "Continue. I need to Use this before I Lose It."
+            if decision == "Redo Selection"
+                uioli_array = select_uioli(pantry_choices)
+                decision = finalize_uioli(uioli_array)
+            elsif decision == "Quit"
+                quit_uioli
+            else 
+                uioli_array
+            end
+        end
+    uioli_array.each do |uioli_element|
+        pantry_choices.delete(uioli_element)
+    end
+    new_pantry_string = pantry_choices.join(", ")
+    this_pantry = Pantry.find_or_create_by(user_id: this_user_id)
+    this_pantry.update(ingredients: new_pantry_string)
 
 
 # results_array = ["bean salad", "jumbalaya", "onions"]
-# # if results_array == []
+# if results_array == []
 
-# # else
+# else
 
-#     chosen_recipes = select_recipes(results_array)
-#     continue = finalize_recipes(chosen_recipes)
-#         until continue == true
-#             chosen_recipes = select_recipes(results_array)
-#             continue = finalize_recipes(chosen_recipes)
-#         end
+    chosen_recipes = select_recipes(results_array)
+    continue = finalize_recipes(chosen_recipes)
+        until continue == true
+            chosen_recipes = select_recipes(results_array)
+            continue = finalize_recipes(chosen_recipes)
+        end
+#chosen recipes needs to be the name of the recipe.
+        recipe_id_array = chosen_recipes.map do |recipe|
+                             rec = Recipe.create(name: recipe)
+                             rec.id    
+                            end
 
-# # end
+if Cookbook.find_by(user_id: this_user_id)
+    this_cookbook = Cookbook.find_by(user_id: this_user_id)
+    recipe_id_array.each do |recipe_id|
+        rec = Recipe.find_by(id: recipe_id)
+        rec.update(cookbook_id: this_cookbook.id)
+    end
+    #Have to make sure the recipes returned are the names of recipes of the recipe objects
+    if this_cookbook.recipes.name
+        this_cookbook_array = this_cookbook.recipes.name
+        all_cookbook_array = (chosen_recipes + this_cookbook_array).uniq.sort
+    else
+        all_cookbook_array = chosen_recipes
+    end
+else
+    this_cookbook = Cookbook.create(user_id: this_user_id)
+    recipe_id_array.each do |recipe_id|
+        rec = Recipe.find_by(id: recipe_id)
+        rec.update(cookbook_id: this_cookbook.id)
+    end
+    all_cookbook_array = chosen_recipes
+end
 
-# all_cookbook_array = ["pizza", "omelette", "avocado"] + chosen_recipes
-# #going to have to add the entire cookbook here and add these results to the search
-# #will wind up converting a string to an array to add them.
-# selected_recipes = cookbook(all_cookbook_array)
-# choice = finalize_cookbook(selected_recipes)
-#     until choice == true
-#         selected_recipes = cookbook_redo(all_cookbook_array)
-#         choice = finalize_cookbook(selected_recipes)
-#     end
+selected_recipes = cookbook(all_cookbook_array)
+choice = finalize_cookbook(selected_recipes)
+    until choice == true
+        selected_recipes = cookbook_redo(all_cookbook_array)
+        choice = finalize_cookbook(selected_recipes)
+    end
 
+    shopping_list_ingredients = selected_recipes.map do |recipe|
+                                    recipe.ingredients.map do |ingredient|
+                                        ingredient
+                                    end
+                                end
 
-# shopping_list_ingredients = ["onion", "kale", "lettuce", "cheese", "tomato", "jalapeno", "spaghetti", "peanuts", "rice", "chicken", "yams"]
+list_with_removed_items = shopping_list(shopping_list_ingredients)
+final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
+    until final_choice == true
+        list_with_removed_items = shopping_list_redo(shopping_list_ingredients)
+        final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
+    end
 
-# list_with_removed_items = shopping_list(shopping_list_ingredients)
-# final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
-#     until final_choice == true
-#         list_with_removed_items = shopping_list_redo(shopping_list_ingredients)
-#         final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
-#     end
-
-# goodbye
+goodbye
 
 
 

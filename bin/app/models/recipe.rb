@@ -1,5 +1,4 @@
 class Recipe < ActiveRecord::Base
-    belongs_to :api
     belongs_to :cookbook
     has_many :ingredients
   
