@@ -65,58 +65,52 @@ choice = check_pantry(pantry_choices)
         end
     end
 
-    this_pantry = PantryItem.find_or_create_by(user_id: this_user_id)
-    pantry_choices_string = pantry_choices.join(", ")
-    this_pantry.update(ingredients: pantry_choices_string)
+this_pantry = PantryItem.find_or_create_by(user_id: this_user_id)
+pantry_choices_string = pantry_choices.join(", ")
+this_pantry.update(ingredients: pantry_choices_string)
 
-    uioli_array = select_uioli(pantry_choices)
-    decision = finalize_uioli(uioli_array)
-        until decision == "Continue. I need to Use It before I Lose It."
-            if decision == "Redo Selection"
-                uioli_array = select_uioli(pantry_choices)
-                decision = finalize_uioli(uioli_array)
-            elsif decision == "Quit"
-                quit_uioli
-            else 
-                uioli_array
-            end
+uioli_array = select_uioli(pantry_choices)
+decision = finalize_uioli(uioli_array)
+    until decision == "Continue. I need to Use It before I Lose It."
+        if decision == "Redo Selection"
+            uioli_array = select_uioli(pantry_choices)
+            decision = finalize_uioli(uioli_array)
+        elsif decision == "Quit"
+            quit_uioli
+        else 
+            uioli_array
         end
-
-    uioli_array.each do |uioli_element|
-        pantry_choices.delete(uioli_element)
     end
-    new_pantry_string = pantry_choices.join(", ")
-    this_pantry.update(ingredients: new_pantry_string)
+
+uioli_array.each do |uioli_element|
+    pantry_choices.delete(uioli_element)
+    end
+    
+new_pantry_string = pantry_choices.join(", ")
+this_pantry.update(ingredients: new_pantry_string)
 
     #uioli_array HOLDS THE NAMES OF THE INGREDIENTS FOR OUR SEARCH
 
    #results_aoh = result from the recipe search from the API
  
-    chosen_recipes_aoh = select_recipes(results_aoh)
-    continue = finalize_recipes(chosen_recipes_aoh)
-        until continue == true
-            chosen_recipes_aoh = select_recipes(results_aoh)
-            continue = finalize_recipes(chosen_recipes_aoh)
-        end
+chosen_recipes_aoh = select_recipes(results_aoh)
+continue = finalize_recipes(chosen_recipes_aoh)
+    until continue == true
+        chosen_recipes_aoh = select_recipes(results_aoh)
+        continue = finalize_recipes(chosen_recipes_aoh)
+    end
 
+    # here is where we create the Cookbooks, function in class Cookbook
+Cookbook.create_cookbooks(chosen_recipes_aoh, this_user_id)
 
-        # here is where we create from the Cookbook class
-    new_cookbooks_array = Cookbook.create_cookbooks(chosen_recipes_aoh, this_user_id)
-    
                             # t.integer :user_id
                             # t.string :name
                             # t.integer :website_id
     
-    
-    cookbook_array_of_hashes = user.recipes_into_aoh
-
-    def recipes_into_aoh
-        cookbook_array_of_hashes = []
-        self.cookbooks.each do |recipes|
-            cookbook_array_of_hashes << {"name" => recipes.name, "website_id" => recipes.website_id}
-        end
-        cookbook_array_of_hashes
-    end
+        #here, we are taking all of the user recipes and turning them into 
+        #hashes in form [{"name"=>"string", "website_id"=>integer}]
+        #function is in User class
+cookbook_array_of_hashes = user.recipes_into_aoh
 
 selected_recipe = cookbook(cookbook_array_of_hashes)
 choice = finalize_cookbook(selected_recipe)
@@ -125,8 +119,13 @@ choice = finalize_cookbook(selected_recipe)
         choice = finalize_cookbook(selected_recipe)
     end
 
-  
-goodbye
+#selected_recipe is a hash. It could be a hash of an array with one element in it
+#could be {"name"=>"string", "website_id"=>integer} or [{"name"=>"string", "website_id"=>integer}]
+#come up with logic here to do the search based on the recipe's
+#website_id. We can pull up the list of ingredients and the url
+
+#then enter that information into the shopping_list 
+shopping_list(recipe_name, recipe_url, recipe_ingredients)
 
 
 
