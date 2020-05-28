@@ -1,10 +1,11 @@
-require 'pry'
+# require 'pry'
 require "tty-prompt"
 require './bin/cli_models/pre_search_helpers.rb'
 require './bin/cli_models/post_search_helpers.rb'
 require './bin/app/models/user.rb'
 require './bin/app/models/pantry_item.rb'
 require './bin/app/models/cookbook.rb'
+require_relative './getrequester.rb'
 
 
 username = user_name
@@ -85,6 +86,25 @@ this_pantry.update(ingredients: new_pantry_string)
 #     uioli_array HOLDS THE NAMES OF THE INGREDIENTS FOR OUR SEARCH
 
 #    results_aoh = result from the recipe search from the API
+uioli_items = uioli_array.join(",")
+
+get_recipe_by_ingredients_url = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=64dca65eeac74ce69073e6e23ff32ae9&ingredients=#{uioli_items}&number=10&ranking=2"
+api_recipe_by_ingredients = GetRequester.new(get_recipe_by_ingredients_url).parse_json
+
+def get_recipe_by_ingredients(api_recipe_by_ingredients)
+    api_get = api_recipe_by_ingredients
+    recipes =[]
+    
+    api_get.each do |recipe|
+        recipe_hash = {}
+        recipe_hash["name"] = recipe["title"]
+        recipe_hash["website_id"] = recipe["id"]
+        recipes << recipe_hash
+    end
+    recipes
+end
+
+results_aoh = get_recipe_by_ingredients(api_recipe_by_ingredients)
 
 chosen_recipes_aoh = select_recipes(results_aoh)
 
@@ -118,7 +138,85 @@ choice = finalize_cookbook(selected_recipe)
 # #then enter that information into the shopping_list 
 # shopping_list(website_id)
 
+# def get_website_id(recipe_array, selected_recipe_name)
+#    recipe_array.each do |recipe| 
+#       if recipe["name"] == selected_recipe_name 
+#          return recipe["website_id"]
+#       end
+#    end
+# end
 
+api_recipe_id = website_id 
+
+ingredients_by_recipe_id_url = "https://api.spoonacular.com/recipes/#{api_recipe_id}/ingredientWidget.json?apiKey=64dca65eeac74ce69073e6e23ff32ae9"
+instructions_by_recipe_id_url = "https://api.spoonacular.com/recipes/#{api_recipe_id}/analyzedInstructions?apiKey=64dca65eeac74ce69073e6e23ff32ae9"
+source_website_by_recipe_id_url = "https://api.spoonacular.com/recipes/#{api_recipe_id}/information?apiKey=64dca65eeac74ce69073e6e23ff32ae9"
+
+api_ingredients_by_recipe_id = GetRequester.new(ingredients_by_recipe_id_url).parse_json
+api_instructions_by_recipe_id = GetRequester.new(instructions_by_recipe_id_url).parse_json
+api_source_website_by_recipe_id = GetRequester.new(source_website_by_recipe_id_url).parse_json
+
+
+def get_recipe_ingredients(api_ingredients_by_recipe_id)
+   array = [] 
+   api_get = api_ingredients_by_recipe_id
+    api_get["ingredients"].each do |ingredient| 
+        array << "#{ingredient["amount"]["us"]["value"]} #{ingredient["amount"]["us"]["unit"]} of #{ingredient["name"]}"
+    end
+    array
+end
+
+recipe_ingredients_from_api = get_recipe_ingredients(api_ingredients_by_recipe_id)
+
+
+def get_recipe_instructions(api_instructions_by_recipe_id)
+    instructions_array = []
+    api_get = api_instructions_by_recipe_id
+    api_get.reverse.each do |instruction|
+        instruction["steps"].each do |step|
+            instructions_array << step["step"]
+        end
+    end
+    instructions_array
+end
+
+recipe_instructions_from_api = get_recipe_instructions(api_instructions_by_recipe_id)
+
+
+
+def get_source_website(api_source_website_by_recipe_id)
+    api_get = api_source_website_by_recipe_id
+    "You can read the full recipe and detailed instructions at #{api_get["sourceUrl"]}"
+end
+
+recipe_source_from_api = get_source_website(api_source_website_by_recipe_id)
+
+
+
+# recipe_name = selected_recipe_hash["name"]
+# recipe_url = selected_recipe_hash["url"]
+#how do I list out the returned ingredients
+def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
+   puts "Great! You are about to cook #{selected_recipe_name}!"
+   puts 
+   puts "Use It Or Lose It! will try to utilize all of the ingredients on your chopping block"
+   puts "but you may need more items before you are chowing down on #{selected_recipe_name}."
+   puts
+   puts "Below, you will find a complete list of ingredients(with quantities)"
+   puts "as well as instructions on how to prepare, cook, and serve this amazing dish."
+   puts
+   puts "INGREDIENTS:"
+   "#{recipe_ingredients_from_api.each {|item| puts item}}"
+   puts
+   puts "INSTRUCTIONS"
+   puts "#{recipe_source_from_api}"
+   "#{recipe_instructions_from_api.each {|step| puts step}}"
+   puts
+   puts
+   puts "Until the next time you fear that you will Lose It..."
+   puts "We appreciate you for choosing to Use It."
+   puts "Thank you!"
+end
 
 
 
