@@ -7,14 +7,6 @@ def user_name
     " for a username.\n\n         What is your username?")
 end
 
-def finalize_recipes(selected_recipes)
-    prompt = TTY::Prompt.new
-    string_recipes = selected_recipes.join(", ")
-    continue = prompt.yes?("\n\nGreat, you picked #{string_recipes}. \n\nIf you would like to"\
-    " add #{string_recipes} to your cookbook, enter: Y. \nIf you would like"\
-    " to re-select your recipes, enter: n")
-end
-
 def user_continue(entered_username)
     prompt = TTY::Prompt.new 
     prompt.yes?("\nWelcome, #{entered_username}. \n\nWe see that you have used Use It Or Lose It"\
@@ -33,7 +25,7 @@ end
 
 def enter_new_pantry
     prompt = TTY::Prompt.new 
-    prompt.ask("\n\nLet's get started! Please enter items from your current pantry.\n"\
+    prompt.ask("\n\n\nLet's get started! Please enter items from your current pantry.\n\n"\
     "If you have multiple ingredients, please separate them with a comma and a space.\n"\
     "Example: garlic, tomato, onion, spinach\n"\
     "\nEnter items here:") do |q|
@@ -42,17 +34,33 @@ def enter_new_pantry
 end
 
 
+def returning_user_pantry(old_pantry_string)
+    prompt = TTY::Prompt.new
+    old_pantry_array = old_pantry_string.split(", ")
+    new_pantry = prompt.ask("\n\n\nWelcome back! Here's what we had in your pantry the last time you were here:"\
+    "\n\n#{old_pantry_string}\n\n"\
+    "Don't worry about clearing your pantry or deleting items you no longer have, we'll get to that next."\
+    "For now, you can add any items you would like to add to your pantry.\n\n"\
+    "If you have multiple ingredients, please separate them with a comma and a space.\n"\
+    "Example: garlic, tomato, onion, spinach\n"\
+    "\n\nEnter items here:") do |q|
+        q.convert -> (input) { input.downcase.split(/,\s*/).uniq.sort }
+      end
+    old_pantry_array + new_pantry
+ end
+ 
+
 
 def check_pantry(pantry_selections)
     prompt = TTY::Prompt.new 
     pantry_string = pantry_selections.join(", ")
-    prompt.select("\nHere is what we have in your pantry:"\
+    prompt.select("\n\nHere is what we have in your pantry:"\
     "\n#{pantry_string}\n\nPlease note that we have sorted your pantry alphabetically,"\
     " written all items in lower case letters,\nand eliminated any duplicate items to help us with our search."\
     "\n\nChoose 'Continue' if you would like to select your Use It Or Lose It items."\
-    "\nChoose 'Redo Pantry' if you would like to start over with selecting your pantry items."\
-    "\nChoose 'Remove from Pantry' if you would like to remove pantry items"\
-    "\nChoose 'Add to Pantry' if you would like to add pantry items"\
+    "\nChoose 'Redo Pantry' if you would like to start over with an empty pantry."\
+    "\nChoose 'Remove from Pantry' if you would like to remove pantry items."\
+    "\nChoose 'Add to Pantry' if you would like to add pantry items."\
     "\nChoose 'Quit' if you have to leave.") do |menu|
         menu.choice 'Continue'
         menu.choice 'Redo Pantry'
@@ -67,7 +75,8 @@ def add_to_pantry(pantry_selection)
     pantry_to_string = pantry_selection.join(", ")
     new_items = prompt.ask("\nHere is your current pantry:"\
     "\n#{pantry_to_string}"\
-    "\n\nPlease add items to your current pantry.\n"\
+    "\n\nPlease add items to your current pant
+    ry.\n\n"\
     "If you have multiple ingredients, please separate them with a comma and a space.\n"\
     "Example: garlic, tomato, onion, spinach\n"\
     "\nEnter items here:") do |q|
@@ -91,7 +100,7 @@ def remove_from_pantry(pantry_array)
 end
 
 def quit_uioli
-    puts "\nWe are sorry to Lose you without Using your items. Have a good day\n"
+    puts "\n\nWe are sorry to Lose you without Using your items. Have a good day!\n\n"
     exit
 end
         

@@ -13,38 +13,37 @@ require './bin/cli_models/post_search_helpers.rb'
 # require './bin/app/models/shopping_list.rb'
 
 
-# username = user_name
+username = user_name
 
-# t = false
-# x = false
-#if User.find_by(username: username) == true
-# if t == true
-#     go_on = user_continue(username)
-#     until go_on == true
-#         username = user_name
+t = true
+x = true
+# if User.find_by(username: username) == true
+if t == true
+    go_on = user_continue(username)
+    until go_on == true
+        username = user_name
+        # if User.find_by(username: username) == true
+        if x == true
+            go_on = user_continue(username)
+        else
+            go_on = create_username(username)
+        end
+    end
+else
+    go_on = create_username(username)
+    until go_on == true
+        username = user_name
         #if User.find_by(username: username) == true
-#         if x == true
-#             go_on = user_continue(username)
-#         else
-#             go_on = create_username(username)
-#         end
-#     end
-# else
-#     go_on = create_username(username)
-#     until go_on == true
-#         username = user_name
-#         #if User.find_by(username: username) == true
-#         if x == true
-#             go_on = user_continue(username)
-#         else
-#             go_on = create_username(username)
-#         end
-#     end
-# end
+        if x == true
+            go_on = user_continue(username)
+        else
+            go_on = create_username(username)
+        end
+    end
+end
 
-
-# pantry_choices = enter_new_pantry
-# choice = check_pantry(pantry_choices)
+pantry_choices = enter_new_pantry
+choice = check_pantry(pantry_choices)
 
     until choice == "Continue"
         if choice == "Remove from Pantry"
@@ -60,7 +59,6 @@ require './bin/cli_models/post_search_helpers.rb'
             quit_uioli
         end
     end
-
 
 
     uioli_array = select_uioli(pantry_choices)
