@@ -90,44 +90,26 @@ choice = check_pantry(pantry_choices)
 
     #uioli_array HOLDS THE NAMES OF THE INGREDIENTS FOR OUR SEARCH
 
-    #if the results array returns nothing, can ask them to enter
-    #ingredients for their search or try different ingredients.
-    #Enter with a space and comma in between them
-
-    #results_array is the results of our search
-    #may need to pair this down somewhere to make more CLI friendly 
-    #after we get the results
-    #in below results_array it is off the names of the results,
-    #will need to figure this out. 
+   #results_aoh = result from the recipe search from the API
  
-    chosen_recipes = select_recipes(results_array)
-    continue = finalize_recipes(chosen_recipes)
+    chosen_recipes_aoh = select_recipes(results_aoh)
+    continue = finalize_recipes(chosen_recipes_aoh)
         until continue == true
-            chosen_recipes = select_recipes(results_array)
-            continue = finalize_recipes(chosen_recipes)
+            chosen_recipes_aoh = select_recipes(results_aoh)
+            continue = finalize_recipes(chosen_recipes_aoh)
         end
-    
-        #chosen recipe should have all the info from the search, name, 
-        #website_id, #list of ingredients
-        #this is where we also create the Ingredient class members who 
-        #belong to each recipe. Include Ingredient and website id number
-        #below function will need to change what it's doing 
-        #when it creates and id, add more inputs to creation
-    recipe_id_array = Recipe.create_and_return_id(chosen_recipes)
-    
-if Cookbook.find_by(user_id: this_user_id)
-    this_cookbook = Cookbook.find_by(user_id: this_user_id)
-    Recipe.attach_recipe_to_cookbook(recipe_id_array, this_cookbook)
-    all_cookbook_array = this_cookbook.recipes
-else
-    this_cookbook = Cookbook.create(user_id: this_user_id)
-    Recipe.attach_recipe_to_cookbook(recipe_id_array, this_cookbook)
-    all_cookbook_array = this_cookbook.recipes
-end
 
-#all_cookbook_array includes the recipe rows, not the recipe names,
-#will have to filter that down to the names in the cookbook function
-#WILL DO THE PAIRING DOWN IN THE POST_SEARCH_HELPERS    
+
+        # here is where we create from the Cookbook class
+    new_cookbooks_array = Cookbook.create_cookbooks(chosen_recipes_aoh, this_user_id)
+    
+                            # t.integer :user_id
+                            # t.string :name
+                            # t.integer :website_id
+    
+        
+
+
 selected_recipes = cookbook(all_cookbook_array)
 choice = finalize_cookbook(selected_recipes)
     until choice == true
@@ -135,24 +117,7 @@ choice = finalize_cookbook(selected_recipes)
         choice = finalize_cookbook(selected_recipes)
     end
 
-            # this is wrong
-    # shopping_list_ingredients = selected_recipes.map do |recipe|
-    #                                 recipe.ingredients.map do |ingredient|
-    #                                     ingredient
-    #                                 end
-    #                             end
-
-    #shopping list_ingredients can just be the name of the ingredients here
-    #have some function here that takes the selected_recipe rows, takes all of 
-    #their ingredients, pulls out their ingredient names
-
-list_with_removed_items = shopping_list(shopping_list_ingredients)
-final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
-    until final_choice == true
-        list_with_removed_items = shopping_list_redo(shopping_list_ingredients)
-        final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
-    end
-
+  
 goodbye
 
 
