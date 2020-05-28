@@ -66,10 +66,38 @@ end
 def finalize_cookbook(selected_recipes)
     prompt = TTY::Prompt.new
     string_recipes = selected_recipes.join(", ")
-    continue = prompt.yes?("\nGreat, you picked:\n#{string_recipes}.\n\nIf you would like to"\
+    continue = prompt.yes?("\nGreat, you picked:\n\n#{string_recipes}.\n\nIf you would like to"\
     " move onto your Shopping List, enter: Y.\n\nIf you would like"\
     " to re-select your recipes, enter: n")
 end
+
+#the items they pick will be deleted from the list
+def shopping_list(selected_ingredients)
+    prompt = TTY::Prompt.new
+    selected_ingredients = selected_ingredients.sort
+    items_to_delete = prompt.multi_select("\n\nGreat, we have your shopping list below in"\
+    " alphebetical order.\n\nYour recipe may ask for greater quantities of ingredients than you have, so\n"\
+    "we are including all ingredients on this list - including potential Use It Or Lose Its!"\
+    "\n\nIf you are all set with any of the ingredients on this list,"\
+    "\nyou can remove them by selecting them below:") do |menu|
+        selected_ingredients.map do |ingredients_array_element|
+            menu.choice ingredients_array_element
+        end
+    end
+    items_to_delete.each do |item|
+        selected_ingredients.delete(item)
+    end
+    selected_ingredients 
+end
+
+
+# def finalize_shopping_list(selected_ingredients)
+#     prompt = TTY::Prompt.new
+#     string_recipes = selected_recipes.join(", ")
+#     continue = prompt.yes?("\nGreat, you picked:\n\n#{string_recipes}.\n\nIf you would like to"\
+#     " move onto your Shopping List, enter: Y.\n\nIf you would like"\
+#     " to re-select your recipes, enter: n")
+# end
  
 
 

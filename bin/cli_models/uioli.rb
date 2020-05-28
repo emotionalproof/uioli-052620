@@ -91,19 +91,21 @@ require './bin/cli_models/post_search_helpers.rb'
 
 # end
 
-all_cookbook_array = ["pizza", "omelette", "avocado"]
-#going to have to add the entire cookbook here and add these results to the search
-selected_recipes = cookbook(all_cookbook_array)
-choice = finalize_cookbook(selected_recipes)
-    until choice == true
-        selected_recipes = cookbook_redo(all_cookbook_array)
-        choice = finalize_cookbook(selected_recipes)
-    end
+# all_cookbook_array = ["pizza", "omelette", "avocado"]
+# #going to have to add the entire cookbook here and add these results to the search
+# selected_recipes = cookbook(all_cookbook_array)
+# choice = finalize_cookbook(selected_recipes)
+#     until choice == true
+#         selected_recipes = cookbook_redo(all_cookbook_array)
+#         choice = finalize_cookbook(selected_recipes)
+#     end
 
 
+shopping_list_ingredients = ["onion", "kale", "lettuce", "cheese", "tomato", "jalapeno"]
 
+new_list = shopping_list(shopping_list_ingredients)
         
-
+puts new_list
 
 
 
