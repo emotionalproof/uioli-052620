@@ -55,10 +55,12 @@ api_source_website_by_recipe_id = GetRequester.new(source_website_by_recipe_id_u
 
 
 def get_recipe_ingredients(api_ingredients_by_recipe_id)
-    api_get = api_ingredients_by_recipe_id
+   array = [] 
+   api_get = api_ingredients_by_recipe_id
     api_get["ingredients"].each do |ingredient| 
-        puts "#{ingredient["amount"]["us"]["value"]} #{ingredient["amount"]["us"]["unit"]} of #{ingredient["name"]}"
+        array << "#{ingredient["amount"]["us"]["value"]} #{ingredient["amount"]["us"]["unit"]} of #{ingredient["name"]}"
     end
+    array
 end
 
 recipe_ingredients_from_api = get_recipe_ingredients(api_ingredients_by_recipe_id)
@@ -81,26 +83,34 @@ recipe_instructions_from_api = get_recipe_instructions(api_instructions_by_recip
 
 def get_source_website(api_source_website_by_recipe_id)
     api_get = api_source_website_by_recipe_id
-    puts "You can read the full recipe and detailed instructions at #{api_get["sourceUrl"]}"
+    "You can read the full recipe and detailed instructions at #{api_get["sourceUrl"]}"
 end
 
 recipe_source_from_api = get_source_website(api_source_website_by_recipe_id)
 
 
-def shopping_list(selected_recipe_name, recipe_source_from_api, recipe_ingredients_from_api, recipe_instructions_from_api)
-    # recipe_name = selected_recipe_hash["name"]
-    # recipe_url = selected_recipe_hash["url"]
-    #how do I list out the returned ingredients
-    puts "Great! You are about to cook #{selected_recipe_name}!"\
-    "\n\nUse It Or Lose It! will try to utilize all of the ingredients on your chopping block"\
-    "\n\nbut you may need more items before you are chowing down on #{selected_recipe_name}."\
-    "\n\nBelow, you will find a complete list of ingredients(with quantities)"
-    "\n\nas well as instructions on how to prepare, cook, and serve this amazing dish."\
-    "\n\nINGREDIENTS:"
-    "\n\n#{recipe_ingredients_from_api}"\
-    "\n\nINSTRUCTIONS"\
-    "\n\nY#{recipe_source_from_api}"\
-    "\n\n#{recipe_instructions_from_api}\n"\
-    "\n\nThank you!\n\nUntil the next time you fear that you will Lose It...\n\n"\
-    "We appreciate you for choosing to Use It.\n\n"\
+
+# recipe_name = selected_recipe_hash["name"]
+# recipe_url = selected_recipe_hash["url"]
+#how do I list out the returned ingredients
+def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
+   puts "Great! You are about to cook #{selected_recipe_name}!"
+   puts 
+   puts "Use It Or Lose It! will try to utilize all of the ingredients on your chopping block"
+   puts "but you may need more items before you are chowing down on #{selected_recipe_name}."
+   puts
+   puts "Below, you will find a complete list of ingredients(with quantities)"
+   puts "as well as instructions on how to prepare, cook, and serve this amazing dish."
+   puts
+   puts "INGREDIENTS:"
+   "#{recipe_ingredients_from_api.each {|item| puts item}}"
+   puts
+   puts "INSTRUCTIONS"
+   puts "#{recipe_source_from_api}"
+   "#{recipe_instructions_from_api.each {|step| puts step}}"
+   puts
+   puts
+   puts "Until the next time you fear that you will Lose It..."
+   puts "We appreciate you for choosing to Use It."
+   puts "Thank you!"
 end
