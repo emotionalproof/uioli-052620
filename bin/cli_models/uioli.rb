@@ -9,11 +9,11 @@ require './bin/cli_models/post_search_helpers.rb'
 
 username = user_name
 
-if User.find_by(username: username) == true
+if User.find_by(username: username)
     go_on = user_continue(username)
     until go_on == true
         username = user_name
-        if User.find_by(username: username) == true
+        if User.find_by(username: username)
             go_on = user_continue(username)
         else
             go_on = create_username(username)
@@ -23,7 +23,7 @@ else
     go_on = create_username(username)
     until go_on == true
         username = user_name
-        if User.find_by(username: username) == true
+        if User.find_by(username: username)
             go_on = user_continue(username)
         else
             go_on = create_username(username)
