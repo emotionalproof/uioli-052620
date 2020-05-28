@@ -40,13 +40,13 @@ def returning_user_pantry(old_pantry_string)
     new_pantry = prompt.ask("\n\n\nWelcome back! Here's what we had in your pantry the last time you were here:"\
     "\n\n#{old_pantry_string}\n\n"\
     "Don't worry about clearing your pantry or deleting items you no longer have, we'll get to that next."\
-    "For now, you can add any items you would like to add to your pantry.\n\n"\
+    "\nFor now, you can add any items you would like to add to your pantry.\n\n"\
     "If you have multiple ingredients, please separate them with a comma and a space.\n"\
     "Example: garlic, tomato, onion, spinach\n"\
     "\n\nEnter items here:") do |q|
         q.convert -> (input) { input.downcase.split(/,\s*/).uniq.sort }
       end
-    old_pantry_array + new_pantry
+    (old_pantry_array + new_pantry).uniq.sort
  end
  
 
