@@ -1,21 +1,37 @@
 uioli_item_array = ["tomato","garlic","onion"]
 uioli_items = uioli_item_array.join(",")
 
+
 get_recipe_by_ingredients_url = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=64dca65eeac74ce69073e6e23ff32ae9&ingredients=#{uioli_items}&number=10&ranking=2"
+website_recipes = GetRequester.new(get_recipe_by_ingredients_url).parse_json
 
-website_recipes = GetRequester.new(url)
-
+recipe_array =[]
 website_recipes.each do |recipe|
     website_recipe = Recipe.create(name: recipe["title"], website_id: recipe["id"])
+    website_id_array
 end
 
+array of hashes
 #test 
 # website_recipes.each do |recipe|
 #     puts recipe["title"]
 #     puts recipe["id"]
 # end
 
+recipe_array =[]
+website_recipes.each do |recipe|
+    recipe_hash = {}
+    recipe_hash["name"] = recipe["title"]
+    recipe_hash["website_id"] = recipe["id"]
+    recipe_array << recipe_hash
+end
 
+def add_to_cookbook(recipe_array)
+    recipe_array.each do |recipe|
+
+        # cookbook_instance = Cookbook.create(name: recipe[:name])
+    end
+end
 
 
 
