@@ -4,15 +4,14 @@ class Cookbook < ActiveRecord::Base
     belongs_to :user
     has_one :pantry_item, through: :user
 
-    def add_recipe(recipe_name)
-        added_recipe = Recipe.find_by(name: recipe_name)
-        added_recipe.update(cookbook_id: self.id)
+    def recipes
+        self.recipes
     end
 
     def all_ingredients
         self.recipes.map do |recipe|
             recipe.ingredients
-        end
+        end.uniq.sort
     end
 
     def add_cookbook_shopping_list(pantry_id)
