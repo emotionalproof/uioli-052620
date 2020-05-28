@@ -20,6 +20,14 @@ class Recipe < ActiveRecord::Base
             rec.update(cookbook_id: cookbook_row.id)
         end
     end
+
+    #takes in an array of recipe names, returns their 
+    selected_recipes.map do |recipe|
+        recipe.ingredients.map do |ingredient|
+            ingredient
+        end
+    end
+
     #set the cookbook_id default as nil
         #then, when the user selects the recipe, add the cookbook_id to this recipe's
             #column This operation will be done in the cookbook.

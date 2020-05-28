@@ -65,6 +65,9 @@ choice = check_pantry(pantry_choices)
         end
     end
 
+    this_pantry = PantryItem.find_or_create_by(user_id: this_user_id)
+    pantry_choices_string = pantry_choices.join(", ")
+    this_pantry.update(ingredients: pantry_choices_string)
 
     uioli_array = select_uioli(pantry_choices)
     decision = finalize_uioli(uioli_array)
@@ -82,7 +85,6 @@ choice = check_pantry(pantry_choices)
         pantry_choices.delete(uioli_element)
     end
     new_pantry_string = pantry_choices.join(", ")
-    this_pantry = Pantry.find_or_create_by(user_id: this_user_id)
     this_pantry.update(ingredients: new_pantry_string)
 
 
@@ -99,28 +101,20 @@ choice = check_pantry(pantry_choices)
         end
 #chosen recipes needs to be the name of the recipe.
  #take in recipe names and creates recipes, while returning an array of their ids
-    recipe_id_array = Recipe.create_and_return_id(array_of_names)
+    recipe_id_array = Recipe.create_and_return_id(chosen_recipes)
     
 if Cookbook.find_by(user_id: this_user_id)
     this_cookbook = Cookbook.find_by(user_id: this_user_id)
     Recipe.attach_recipe_to_cookbook(recipe_id_array, this_cookbook)
-    end
-    #Have to make sure the recipes returned are the names of recipes of the recipe objects
-    if this_cookbook.recipes.name
-        this_cookbook_array = this_cookbook.recipes.name
-        all_cookbook_array = (chosen_recipes + this_cookbook_array).uniq.sort
-    else
-        all_cookbook_array = chosen_recipes
-    end
+    all_cookbook_array = this_cookbook.recipes
 else
     this_cookbook = Cookbook.create(user_id: this_user_id)
-    recipe_id_array.each do |recipe_id|
-        rec = Recipe.find_by(id: recipe_id)
-        rec.update(cookbook_id: this_cookbook.id)
-    end
-    all_cookbook_array = chosen_recipes
+    Recipe.attach_recipe_to_cookbook(recipe_id_array, this_cookbook)
+    all_cookbook_array = this_cookbook.recipes
 end
 
+#all_cookbook_array includes the recipe rows, not the recipe names,
+#will have to filter that down to the names in the cookbook function
 selected_recipes = cookbook(all_cookbook_array)
 choice = finalize_cookbook(selected_recipes)
     until choice == true
@@ -128,11 +122,12 @@ choice = finalize_cookbook(selected_recipes)
         choice = finalize_cookbook(selected_recipes)
     end
 
-    shopping_list_ingredients = selected_recipes.map do |recipe|
-                                    recipe.ingredients.map do |ingredient|
-                                        ingredient
-                                    end
-                                end
+            # this is wrong
+    # shopping_list_ingredients = selected_recipes.map do |recipe|
+    #                                 recipe.ingredients.map do |ingredient|
+    #                                     ingredient
+    #                                 end
+    #                             end
 
 list_with_removed_items = shopping_list(shopping_list_ingredients)
 final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
