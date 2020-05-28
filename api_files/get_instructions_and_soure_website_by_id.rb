@@ -35,7 +35,15 @@ def recipe_instructions_and_url(instruction_url, source_website_url)
 end
 
 
-
+def get_recipe_instructions(instruction_url)
+    instructions_array = []
+    instructions = GetRequester.new(instruction_url).parse_json
+    instructions.reverse.each do |instruction|
+        instruction["steps"].each do |step|
+            instructions_array << step["step"]
+        end
+    end
+end
 
 
 array = [
@@ -349,3 +357,8 @@ array = [
     ]
   }
 ]
+
+
+ recipes = [{name: Tomato Pasta, website_id: 37493}, {name: Pizza, website_it}]
+
+ 
