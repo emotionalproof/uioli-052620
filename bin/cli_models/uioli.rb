@@ -46,66 +46,75 @@ require './bin/cli_models/post_search_helpers.rb'
 # pantry_choices = enter_new_pantry
 # choice = check_pantry(pantry_choices)
 
-#     until choice == "Continue"
-#         if choice == "Remove from Pantry"
-#             pantry_choices = remove_from_pantry(pantry_choices)
-#             choice = check_pantry(pantry_choices)
-#         elsif choice == "Add to Pantry"
-#             pantry_choices = add_to_pantry(pantry_choices)
-#             choice = check_pantry(pantry_choices)
-#         elsif choice == "Redo Pantry"    
-#             pantry_choices = enter_new_pantry
-#             choice = check_pantry(pantry_choices)
-#         elsif choice == "Quit"
-#             quit_uioli
-#         end
-#     end
+    until choice == "Continue"
+        if choice == "Remove from Pantry"
+            pantry_choices = remove_from_pantry(pantry_choices)
+            choice = check_pantry(pantry_choices)
+        elsif choice == "Add to Pantry"
+            pantry_choices = add_to_pantry(pantry_choices)
+            choice = check_pantry(pantry_choices)
+        elsif choice == "Redo Pantry"    
+            pantry_choices = enter_new_pantry
+            choice = check_pantry(pantry_choices)
+        elsif choice == "Quit"
+            quit_uioli
+        end
+    end
 
 
 
-#     uioli_array = select_uioli(pantry_choices)
-#     decision = finalize_uioli(uioli_array)
-#         until decision == "Continue. I need to Use this before I Lose It."
-#             if decision == "Redo Selection"
-#                 uioli_array = select_uioli(pantry_choices)
-#                 decision = finalize_uioli(uioli_array)
-#             elsif decision == "Quit"
-#                 quit_uioli
-#             else 
-#                 uioli_array
-#             end
-#         end
+    uioli_array = select_uioli(pantry_choices)
+    decision = finalize_uioli(uioli_array)
+        until decision == "Continue. I need to Use this before I Lose It."
+            if decision == "Redo Selection"
+                uioli_array = select_uioli(pantry_choices)
+                decision = finalize_uioli(uioli_array)
+            elsif decision == "Quit"
+                quit_uioli
+            else 
+                uioli_array
+            end
+        end
 
 
 
-# results_array = ["pizza", "omelette", "avocado"]
+results_array = ["bean salad", "jumbalaya", "onions"]
 # if results_array == []
 
 # else
-    # chosen_recipes = select_recipes(results_array)
-    # continue = finalize_recipes(chosen_recipes)
-    #     until continue == true
-    #         choose_recipes = select_recipes(results_array)
-    #         continue = finalize_recipes(choose_recipes)
-    #     end
+
+    chosen_recipes = select_recipes(results_array)
+    continue = finalize_recipes(chosen_recipes)
+        until continue == true
+            chosen_recipes = select_recipes(results_array)
+            continue = finalize_recipes(chosen_recipes)
+        end
 
 # end
 
-# all_cookbook_array = ["pizza", "omelette", "avocado"]
-# #going to have to add the entire cookbook here and add these results to the search
-# selected_recipes = cookbook(all_cookbook_array)
-# choice = finalize_cookbook(selected_recipes)
-#     until choice == true
-#         selected_recipes = cookbook_redo(all_cookbook_array)
-#         choice = finalize_cookbook(selected_recipes)
-#     end
+all_cookbook_array = ["pizza", "omelette", "avocado"] + chosen_recipes
+#going to have to add the entire cookbook here and add these results to the search
+#will wind up converting a string to an array to add them.
+selected_recipes = cookbook(all_cookbook_array)
+choice = finalize_cookbook(selected_recipes)
+    until choice == true
+        selected_recipes = cookbook_redo(all_cookbook_array)
+        choice = finalize_cookbook(selected_recipes)
+    end
 
 
-shopping_list_ingredients = ["onion", "kale", "lettuce", "cheese", "tomato", "jalapeno"]
+shopping_list_ingredients = ["onion", "kale", "lettuce", "cheese", "tomato", "jalapeno", "spaghetti", "peanuts", "rice", "chicken", "yams"]
 
-new_list = shopping_list(shopping_list_ingredients)
-        
-puts new_list
+list_with_removed_items = shopping_list(shopping_list_ingredients)
+final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
+    until final_choice == true
+        list_with_removed_items = shopping_list_redo(shopping_list_ingredients)
+        final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
+    end
+
+goodbye
+
+
 
 
 
