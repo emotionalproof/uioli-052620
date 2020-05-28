@@ -1,8 +1,21 @@
-ingredient_hash.each do |ingredient|
-    ingredient = Ingredient.create(name: ingredient["name"])
-    ingredient(amount) = "#{ingredient["amount"]["us"]["value"]} 
-    ingredient(measurement) = "#{ingredient["amount"]["us"]["unit"]}"
+spoon_recipe_id = 26715
+
+ingredients_by_recipe_url = "https://api.spoonacular.com/recipes/#{spoon_recipe_id}/ingredientWidget.json?apiKey=64dca65eeac74ce69073e6e23ff32ae9"
+
+
+hash = GetRequester.new(url)
+
+hash["ingredients"].each do |ingredient| 
+    ingredient_description = Ingredient.create
+    ingredient_description(name) = "#{ingredient["amount"]["us"]["value"]} #{ingredient["amount"]["us"]["unit"]} of #{ingredient["name"]}"
 end
+
+# test
+# hash["ingredients"].each do |ingredient| 
+#     puts "#{ingredient["amount"]["us"]["value"]} #{ingredient["amount"]["us"]["unit"]} of #{ingredient["name"]}"
+# end
+
+
 
 
 
