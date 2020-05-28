@@ -107,13 +107,21 @@ choice = check_pantry(pantry_choices)
                             # t.string :name
                             # t.integer :website_id
     
+    
+    cookbook_array_of_hashes = user.recipes_into_aoh
 
-this_user.cookbooks
+    def recipes_into_aoh
+        cookbook_array_of_hashes = []
+        self.cookbooks.each do |recipes|
+            cookbook_array_of_hashes << {"name" => recipes.name, "website_id" => recipes.website_id}
+        end
+        cookbook_array_of_hashes
+    end
 
-selected_recipe = cookbook(this_user)
+selected_recipe = cookbook(cookbook_array_of_hashes)
 choice = finalize_cookbook(selected_recipe)
     until choice == true
-        selected_recipe = cookbook_redo(this_user)
+        selected_recipe = cookbook_redo(cookbook_array_of_hashes)
         choice = finalize_cookbook(selected_recipe)
     end
 
