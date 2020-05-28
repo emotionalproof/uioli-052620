@@ -81,26 +81,38 @@ choice = check_pantry(pantry_choices)
                 uioli_array
             end
         end
+
     uioli_array.each do |uioli_element|
         pantry_choices.delete(uioli_element)
     end
     new_pantry_string = pantry_choices.join(", ")
     this_pantry.update(ingredients: new_pantry_string)
 
+    #uioli_array HOLDS THE NAMES OF THE INGREDIENTS FOR OUR SEARCH
 
-# results_array = ["bean salad", "jumbalaya", "onions"]
-# if results_array == []
+    #if the results array returns nothing, can ask them to enter
+    #ingredients for their search or try different ingredients.
+    #Enter with a space and comma in between them
 
-# else
-
+    #results_array is the results of our search
+    #may need to pair this down somewhere to make more CLI friendly 
+    #after we get the results
+    #in below results_array it is off the names of the results,
+    #will need to figure this out. 
+ 
     chosen_recipes = select_recipes(results_array)
     continue = finalize_recipes(chosen_recipes)
         until continue == true
             chosen_recipes = select_recipes(results_array)
             continue = finalize_recipes(chosen_recipes)
         end
-#chosen recipes needs to be the name of the recipe.
- #take in recipe names and creates recipes, while returning an array of their ids
+    
+        #chosen recipe should have all the info from the search, name, 
+        #website_id, #list of ingredients
+        #this is where we also create the Ingredient class members who 
+        #belong to each recipe. Include Ingredient and website id number
+        #below function will need to change what it's doing 
+        #when it creates and id, add more inputs to creation
     recipe_id_array = Recipe.create_and_return_id(chosen_recipes)
     
 if Cookbook.find_by(user_id: this_user_id)
@@ -115,6 +127,7 @@ end
 
 #all_cookbook_array includes the recipe rows, not the recipe names,
 #will have to filter that down to the names in the cookbook function
+#WILL DO THE PAIRING DOWN IN THE POST_SEARCH_HELPERS    
 selected_recipes = cookbook(all_cookbook_array)
 choice = finalize_cookbook(selected_recipes)
     until choice == true
@@ -128,6 +141,10 @@ choice = finalize_cookbook(selected_recipes)
     #                                     ingredient
     #                                 end
     #                             end
+
+    #shopping list_ingredients can just be the name of the ingredients here
+    #have some function here that takes the selected_recipe rows, takes all of 
+    #their ingredients, pulls out their ingredient names
 
 list_with_removed_items = shopping_list(shopping_list_ingredients)
 final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)

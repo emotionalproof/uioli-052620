@@ -3,6 +3,8 @@ class Recipe < ActiveRecord::Base
     has_many :ingredients
   
     #takes in array of names and returns an array of its recipe ids
+    #will not take IN AN ARRAY OF NAAMES, WILL TAKE IN ARRAY OF RESULTS
+    #WILL TAKE THOSE RESULTS AND CREATE THE RECIPE WITH NAME AND WEBSITE_ID
     def self.create_and_return_id(array_of_names)
         recipe_array_ids = [] 
             array_of_names.each do |recipe_name|
