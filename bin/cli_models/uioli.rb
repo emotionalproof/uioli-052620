@@ -107,14 +107,14 @@ choice = check_pantry(pantry_choices)
                             # t.string :name
                             # t.integer :website_id
     
-        
 
+this_user.cookbooks
 
-selected_recipes = cookbook(all_cookbook_array)
-choice = finalize_cookbook(selected_recipes)
+selected_recipe = cookbook(this_user)
+choice = finalize_cookbook(selected_recipe)
     until choice == true
-        selected_recipes = cookbook_redo(all_cookbook_array)
-        choice = finalize_cookbook(selected_recipes)
+        selected_recipe = cookbook_redo(this_user)
+        choice = finalize_cookbook(selected_recipe)
     end
 
   

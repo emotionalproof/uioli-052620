@@ -1,8 +1,5 @@
 class Cookbook < ActiveRecord::Base
-    has_many :recipes
-    has_many :ingredients, through: :recipes
     belongs_to :user
-    has_one :pantry_item, through: :user
 
     #takes in the chosen aoh from our search and our user's ID, creates Cookbooks
     def self.create_cookbooks(chosen_recipes_aoh, userid)
