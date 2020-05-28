@@ -78,7 +78,7 @@ require './bin/cli_models/post_search_helpers.rb'
 
 
 
-results_array = ["pizza", "omelette", "avocado"]
+# results_array = ["pizza", "omelette", "avocado"]
 # if results_array == []
 
 # else
@@ -90,9 +90,18 @@ results_array = ["pizza", "omelette", "avocado"]
     #     end
 
 # end
-result = cookbook(results_array)
 
-puts result
+all_cookbook_array = ["pizza", "omelette", "avocado"]
+#going to have to add the entire cookbook here and add these results to the search
+selected_recipes = cookbook(all_cookbook_array)
+choice = finalize_cookbook(selected_recipes)
+    until choice == true
+        selected_recipes = cookbook_redo(all_cookbook_array)
+        choice = finalize_cookbook(selected_recipes)
+    end
+
+
+
         
 
 

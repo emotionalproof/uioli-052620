@@ -48,6 +48,28 @@ def cookbook(cookbook_array)
             end
         end
 end
+
+def cookbook_redo(cookbook_array)
+    prompt = TTY::Prompt.new
+    cookbook_string = cookbook_array.sort.join(", ")
+    prompt.multi_select("\n\nAlright, let's try this again. Here are your cookbook recipes:"\
+    "\n\n#{cookbook_string}.\n"\
+        "\nYour recipes are listed in alphabetical order."\
+        "\nLet's decide what we're cooking today so we can make a shopping list:\n\n") do |menu|
+        cookbook_array.sort.map do |array_element|
+            menu.choice array_element
+            end
+        end
+end
+
+
+def finalize_cookbook(selected_recipes)
+    prompt = TTY::Prompt.new
+    string_recipes = selected_recipes.join(", ")
+    continue = prompt.yes?("\nGreat, you picked:\n#{string_recipes}.\n\nIf you would like to"\
+    " move onto your Shopping List, enter: Y.\n\nIf you would like"\
+    " to re-select your recipes, enter: n")
+end
  
 
 
