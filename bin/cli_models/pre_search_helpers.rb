@@ -75,8 +75,7 @@ def add_to_pantry(pantry_selection)
     pantry_to_string = pantry_selection.join(", ")
     new_items = prompt.ask("\nHere is your current pantry:"\
     "\n#{pantry_to_string}"\
-    "\n\nPlease add items to your current pant
-    ry.\n\n"\
+    "\n\nPlease add items to your current pantry.\n\n"\
     "If you have multiple ingredients, please separate them with a comma and a space.\n"\
     "Example: garlic, tomato, onion, spinach\n"\
     "\nEnter items here:") do |q|
@@ -122,7 +121,7 @@ def finalize_uioli(selected_uioli)
         "\n\nChoose 'Continue' if you would like to start your Use It Or Lose It Search."\
         "\nChoose 'Redo Selection' if you would like re-select your Use It Or Lose It items."\
         "\nChoose 'Quit' if you have to leave.\n") do |menu|
-            menu.choice 'Continue. I need to Use this before I Lose It.'
+            menu.choice 'Continue. I need to Use It before I Lose It.'
             menu.choice 'Redo Selection'
             menu.choice 'Quit'
         end

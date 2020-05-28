@@ -71,7 +71,7 @@ choice = check_pantry(pantry_choices)
 
     uioli_array = select_uioli(pantry_choices)
     decision = finalize_uioli(uioli_array)
-        until decision == "Continue. I need to Use this before I Lose It."
+        until decision == "Continue. I need to Use It before I Lose It."
             if decision == "Redo Selection"
                 uioli_array = select_uioli(pantry_choices)
                 decision = finalize_uioli(uioli_array)
