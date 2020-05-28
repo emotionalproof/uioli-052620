@@ -65,95 +65,67 @@ choice = check_pantry(pantry_choices)
         end
     end
 
-    this_pantry = PantryItem.find_or_create_by(user_id: this_user_id)
-    pantry_choices_string = pantry_choices.join(", ")
-    this_pantry.update(ingredients: pantry_choices_string)
+this_pantry = PantryItem.find_or_create_by(user_id: this_user_id)
+pantry_choices_string = pantry_choices.join(", ")
+this_pantry.update(ingredients: pantry_choices_string)
 
-    uioli_array = select_uioli(pantry_choices)
-    decision = finalize_uioli(uioli_array)
-        until decision == "Continue. I need to Use this before I Lose It."
-            if decision == "Redo Selection"
-                uioli_array = select_uioli(pantry_choices)
-                decision = finalize_uioli(uioli_array)
-            elsif decision == "Quit"
-                quit_uioli
-            else 
-                uioli_array
-            end
+uioli_array = select_uioli(pantry_choices)
+decision = finalize_uioli(uioli_array)
+    until decision == "Continue. I need to Use It before I Lose It."
+        if decision == "Redo Selection"
+            uioli_array = select_uioli(pantry_choices)
+            decision = finalize_uioli(uioli_array)
+        elsif decision == "Quit"
+            quit_uioli
+        else 
+            uioli_array
         end
-
-    uioli_array.each do |uioli_element|
-        pantry_choices.delete(uioli_element)
     end
-    new_pantry_string = pantry_choices.join(", ")
-    this_pantry.update(ingredients: new_pantry_string)
+
+uioli_array.each do |uioli_element|
+    pantry_choices.delete(uioli_element)
+    end
+    
+new_pantry_string = pantry_choices.join(", ")
+this_pantry.update(ingredients: new_pantry_string)
 
     #uioli_array HOLDS THE NAMES OF THE INGREDIENTS FOR OUR SEARCH
 
-    #if the results array returns nothing, can ask them to enter
-    #ingredients for their search or try different ingredients.
-    #Enter with a space and comma in between them
-
-    #results_array is the results of our search
-    #may need to pair this down somewhere to make more CLI friendly 
-    #after we get the results
-    #in below results_array it is off the names of the results,
-    #will need to figure this out. 
+   #results_aoh = result from the recipe search from the API
  
-    chosen_recipes = select_recipes(results_array)
-    continue = finalize_recipes(chosen_recipes)
-        until continue == true
-            chosen_recipes = select_recipes(results_array)
-            continue = finalize_recipes(chosen_recipes)
-        end
-    
-        #chosen recipe should have all the info from the search, name, 
-        #website_id, #list of ingredients
-        #this is where we also create the Ingredient class members who 
-        #belong to each recipe. Include Ingredient and website id number
-        #below function will need to change what it's doing 
-        #when it creates and id, add more inputs to creation
-    recipe_id_array = Recipe.create_and_return_id(chosen_recipes)
-    
-if Cookbook.find_by(user_id: this_user_id)
-    this_cookbook = Cookbook.find_by(user_id: this_user_id)
-    Recipe.attach_recipe_to_cookbook(recipe_id_array, this_cookbook)
-    all_cookbook_array = this_cookbook.recipes
-else
-    this_cookbook = Cookbook.create(user_id: this_user_id)
-    Recipe.attach_recipe_to_cookbook(recipe_id_array, this_cookbook)
-    all_cookbook_array = this_cookbook.recipes
-end
+chosen_recipes_aoh = select_recipes(results_aoh)
+continue = finalize_recipes(chosen_recipes_aoh)
+    until continue == true
+        chosen_recipes_aoh = select_recipes(results_aoh)
+        continue = finalize_recipes(chosen_recipes_aoh)
+    end
 
-#all_cookbook_array includes the recipe rows, not the recipe names,
-#will have to filter that down to the names in the cookbook function
-#WILL DO THE PAIRING DOWN IN THE POST_SEARCH_HELPERS    
-selected_recipes = cookbook(all_cookbook_array)
-choice = finalize_cookbook(selected_recipes)
+    # here is where we create the Cookbooks, function in class Cookbook
+Cookbook.create_cookbooks(chosen_recipes_aoh, this_user_id)
+
+                            # t.integer :user_id
+                            # t.string :name
+                            # t.integer :website_id
+    
+        #here, we are taking all of the user recipes and turning them into 
+        #hashes in form [{"name"=>"string", "website_id"=>integer}]
+        #function is in User class
+cookbook_array_of_hashes = user.recipes_into_aoh
+
+selected_recipe = cookbook(cookbook_array_of_hashes)
+choice = finalize_cookbook(selected_recipe)
     until choice == true
-        selected_recipes = cookbook_redo(all_cookbook_array)
-        choice = finalize_cookbook(selected_recipes)
+        selected_recipe = cookbook_redo(cookbook_array_of_hashes)
+        choice = finalize_cookbook(selected_recipe)
     end
 
-            # this is wrong
-    # shopping_list_ingredients = selected_recipes.map do |recipe|
-    #                                 recipe.ingredients.map do |ingredient|
-    #                                     ingredient
-    #                                 end
-    #                             end
+#selected_recipe is a hash. It could be a hash of an array with one element in it
+#could be {"name"=>"string", "website_id"=>integer} or [{"name"=>"string", "website_id"=>integer}]
+#come up with logic here to do the search based on the recipe's
+#website_id. We can pull up the list of ingredients and the url
 
-    #shopping list_ingredients can just be the name of the ingredients here
-    #have some function here that takes the selected_recipe rows, takes all of 
-    #their ingredients, pulls out their ingredient names
-
-list_with_removed_items = shopping_list(shopping_list_ingredients)
-final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
-    until final_choice == true
-        list_with_removed_items = shopping_list_redo(shopping_list_ingredients)
-        final_choice = finalize_shopping_list(list_with_removed_items, selected_recipes)
-    end
-
-goodbye
+#then enter that information into the shopping_list 
+shopping_list(recipe_name, recipe_url, recipe_ingredients)
 
 
 
