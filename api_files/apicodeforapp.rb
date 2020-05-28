@@ -24,20 +24,28 @@ end
 
 
 
+#for the code below
+#Three secions: 
+#API Get URLS, API GET requests, API code to filter output
+
+#Within each section the entries are : 
+#ingredients by recipe, instructions by recipe, source website by recipe
 
 
 api_recipe_id = selected_recipe_hash[webiste_id]
 
+#API GET urls
 ingredients_by_recipe_id_url = "https://api.spoonacular.com/recipes/#{api_recipe_id}/ingredientWidget.json?apiKey=64dca65eeac74ce69073e6e23ff32ae9"
 instructions_by_recipe_id_url = "https://api.spoonacular.com/recipes/#{api_recipe_id}/analyzedInstructions?apiKey=64dca65eeac74ce69073e6e23ff32ae9"
 source_website_by_recipe_id_url = "https://api.spoonacular.com/recipes/#{api_recipe_id}/information?apiKey=64dca65eeac74ce69073e6e23ff32ae9"
 
-
+#API GET requests
 api_ingredients_by_recipe_id = GetRequester.new(ingredients_by_recipe_id_url).parse_json
 api_instructions_by_recipe_id = GetRequester.new(instructions_by_recipe_id_url).parse_json
 api_source_website_by_recipe_id = GetRequester.new(source_website_by_recipe_id_url).parse_json
 
 
+#API code for desired output
 def get_recipe_ingredients(api_ingredients_by_recipe_id)
     api_get = api_ingredients_by_recipe_id
     api_get["ingredients"].each do |ingredient| 
@@ -56,8 +64,11 @@ def get_recipe_instructions(api_instructions_by_recipe_id)
     instructions_array
 end
 
-
 def get_source_website(api_source_website_by_recipe_id)
     api_get = api_source_website_by_recipe_id
     puts "You can read the full recipe and detailed instructions at #{api_get["sourceUrl"]}"
 end
+
+
+
+
