@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
     has_one :pantryitem
-    has_manys :cookbooks
+    has_many :cookbooks
 
+    #takes its recipes and creates an array of hashes: {"name"=>recipes.name, "website_id"=>recipes.website_id}
     def recipes_into_aoh
         cookbook_array_of_hashes = []
         self.cookbooks.each do |recipes|
@@ -9,9 +10,5 @@ class User < ActiveRecord::Base
         end
         cookbook_array_of_hashes
     end
-
-
-
 end
 
-#columns: name
