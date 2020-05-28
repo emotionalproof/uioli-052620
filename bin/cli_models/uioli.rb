@@ -98,16 +98,12 @@ choice = check_pantry(pantry_choices)
             continue = finalize_recipes(chosen_recipes)
         end
 #chosen recipes needs to be the name of the recipe.
-        recipe_id_array = chosen_recipes.map do |recipe|
-                             rec = Recipe.create(name: recipe)
-                             rec.id    
-                            end
-
+ #take in recipe names and creates recipes, while returning an array of their ids
+    recipe_id_array = Recipe.create_and_return_id(array_of_names)
+    
 if Cookbook.find_by(user_id: this_user_id)
     this_cookbook = Cookbook.find_by(user_id: this_user_id)
-    recipe_id_array.each do |recipe_id|
-        rec = Recipe.find_by(id: recipe_id)
-        rec.update(cookbook_id: this_cookbook.id)
+    Recipe.attach_recipe_to_cookbook(recipe_id_array, this_cookbook)
     end
     #Have to make sure the recipes returned are the names of recipes of the recipe objects
     if this_cookbook.recipes.name
