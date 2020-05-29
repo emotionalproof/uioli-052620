@@ -1,12 +1,12 @@
 require_relative '../config/environment'
-require 'pry'
-require "tty-prompt"
-require './bin/cli_models/pre_search_helpers.rb'
-require './bin/cli_models/post_search_helpers.rb'
-require './bin/app/models/user.rb'
-require './bin/app/models/pantry_item.rb'
-require './bin/app/models/cookbook.rb'
-require_relative './getrequester.rb'
+# require 'pry'
+# require "tty-prompt"
+# require './bin/cli_models/pre_search_helpers.rb'
+# require './bin/cli_models/post_search_helpers.rb'
+# require './bin/app/models/user.rb'
+# require './bin/app/models/pantry_item.rb'
+# require './bin/app/models/cookbook.rb'
+# require_relative './getrequester.rb'
 
 
 username = user_name
