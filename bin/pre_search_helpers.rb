@@ -52,13 +52,14 @@ def returning_user_pantry(old_pantry_string)
     "Example: garlic, tomato, onion, spinach\n"\
     "\n\nEnter items here:") do |q|
         q.convert -> (input) { input.downcase.split(/,\s*/).uniq.sort }
-      end
+    end
 
       if new_pantry == nil
-        new_pantry = returning_user_pantry(old_pantry_string)
-      end
-      
-      (old_pantry_array + new_pantry).uniq.sort
+        old_pantry_array.uniq.sort
+        # new_pantry = returning_user_pantry(old_pantry_string)
+      else
+        (old_pantry_array + new_pantry).uniq.sort
+      end   
  end
  
 
