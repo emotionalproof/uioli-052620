@@ -138,7 +138,7 @@ def get_recipe_by_ingredients(api_recipe_by_ingredients)
     
     api_get.each do |recipe|
         recipe_hash = {}
-        recipe_hash["name"] = recipe["title"]
+        recipe_hash["name"] = recipe["title"].titleize
         recipe_hash["website_id"] = recipe["id"]
         recipes << recipe_hash
     end
