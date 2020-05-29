@@ -82,7 +82,7 @@ def get_recipe_ingredients(api_ingredients_by_recipe_id)
      array
  end
 
- def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
+ def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api, youtube_input)
     puts
     puts
     puts
@@ -115,7 +115,8 @@ def get_recipe_ingredients(api_ingredients_by_recipe_id)
     puts "#{recipe_source_from_api}"
     "#{recipe_instructions_from_api.each {|step| puts step}}"
     puts
-    puts
+    puts "For video instruction and guides to similar recipes, click here to the link below"
+    puts "https://www.youtube.com/results?search_query=#{youtube_input}"
     puts "Until the next time you fear that you will Lose It..."
     puts "We appreciate you for choosing to Use It."
     puts "Thank you!"

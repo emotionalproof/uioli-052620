@@ -193,5 +193,5 @@ recipe_ingredients_from_api = get_recipe_ingredients(api_ingredients_by_recipe_i
 recipe_instructions_from_api = get_recipe_instructions(api_instructions_by_recipe_id)
 recipe_source_from_api = get_source_website(api_source_website_by_recipe_id)
 
-goodbye(selected_recipe["name"], recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
+goodbye(selected_recipe["name"], recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api, youtube_input)
 
