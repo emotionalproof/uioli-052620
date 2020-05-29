@@ -1,11 +1,16 @@
-# require 'pry'
+
+require_relative '../config/environment.rb'
+require 'pry'
 require "tty-prompt"
-require './bin/cli_models/pre_search_helpers.rb'
-require './bin/cli_models/post_search_helpers.rb'
-require './bin/app/models/user.rb'
-require './bin/app/models/pantry_item.rb'
-require './bin/app/models/cookbook.rb'
-require_relative './getrequester.rb'
+require_relative './pre_search_helpers.rb'
+require_relative './post_search_helpers.rb'
+# require './bin/app/models/user.rb'
+# require './bin/app/models/pantry_item.rb'
+# require './bin/app/models/cookbook.rb'
+# require_relative './getrequester.rb'
+# require_all 'lib'
+
+
 
 
 username = user_name

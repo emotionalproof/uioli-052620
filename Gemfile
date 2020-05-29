@@ -7,3 +7,5 @@ gem "sqlite3", '~> 1.3.6'
 gem "pry"
 gem "require_all"
 gem "faker"
+gem 'tty'
+gem "unicode-display_width", ">= 1.3.3"
