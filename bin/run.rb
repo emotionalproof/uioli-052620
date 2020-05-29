@@ -6,7 +6,20 @@ require_relative '../config/environment.rb'
 # require_relative './bin/app/models/cookbook.rb'
 # require_relative './cli_models/getrequester.rb'
 require_all 'lib'
-
+puts
+puts
+puts
+puts
+puts
+puts
+puts
+puts
+puts
+puts
+puts
+puts
+puts
+puts
 puts     
 puts "/A  /A  /A  /A"
 puts "|@| |@| |@| |@|"
@@ -216,10 +229,28 @@ recipe_source_from_api = get_source_website(api_source_website_by_recipe_id)
 
 
 
+
 # recipe_name = selected_recipe_hash["name"]
 # recipe_url = selected_recipe_hash["url"]
 #how do I list out the returned ingredients
 def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
+   puts
    puts "Great! You are about to cook #{selected_recipe_name}!"
    puts 
    puts "Use It Or Lose It! will try to utilize all of the ingredients on your chopping block"
