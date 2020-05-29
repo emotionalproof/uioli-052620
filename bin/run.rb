@@ -133,6 +133,7 @@ this_pantry.update(ingredients: new_pantry_string)
 #    results_aoh = result from the recipe search from the API
 uioli_items = uioli_array.join(",")
 
+
 get_recipe_by_ingredients_url = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=64dca65eeac74ce69073e6e23ff32ae9&ingredients=#{uioli_items}&number=10&ranking=2"
 api_recipe_by_ingredients = GetRequester.new(get_recipe_by_ingredients_url).parse_json
 
@@ -171,6 +172,7 @@ Cookbook.create_cookbooks(chosen_recipes_aoh, this_user_id)
 cookbook_array_of_hashes = this_user.recipes_into_aoh
 
 selected_recipe = cookbook(cookbook_array_of_hashes)
+youtube_input = selected_recipe["name"].split(" ").join("+")
 choice = finalize_cookbook(selected_recipe)
     until choice == true
         selected_recipe = cookbook_redo(cookbook_array_of_hashes)
