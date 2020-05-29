@@ -26,12 +26,18 @@ end
 
 def enter_new_pantry
     prompt = TTY::Prompt.new 
-    prompt.ask("\n\n\n\n\n\n\n\n\n\n\nLet's get started! Please enter items from your current pantry.\n\n"\
+pantry_string= prompt.ask("\n\n\n\n\n\n\n\n\n\n\nLet's get started! Please enter items from your current pantry.\n\n"\
     "If you have multiple ingredients, please separate them with a comma and a space.\n"\
     "Example: garlic, tomato, onion, spinach\n"\
     "\nEnter items here:") do |q|
         q.convert -> (input) { input.downcase.split(/,\s*/).uniq.sort }
       end
+
+      if pantry_string == nil
+        pantry_string = enter_new_pantry
+      end
+      pantry_string
+     
 end
 
 

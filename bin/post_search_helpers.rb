@@ -6,7 +6,7 @@ require "tty-prompt"
 def select_recipes(results_aoh)
     prompt = TTY::Prompt.new
     choices = {}
-    results_aoh.map do |hash|
+    results_aoh.each do |hash|
         choices[hash["name"]] = hash
     end
     prompt.multi_select("\n\n\n\n\n\n\n\n\n\nWe have the results of your Use It Or Lose It Search!"\

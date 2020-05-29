@@ -1,6 +1,6 @@
 
 require_relative '../config/environment.rb'
-
+require 'pry'
 # require_relative './bin/app/models/user.rb'
 # require_relative './bin/app/models/pantry_item.rb'
 # require_relative './bin/app/models/cookbook.rb'
