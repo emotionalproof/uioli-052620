@@ -1,4 +1,3 @@
-
 require_relative '../config/environment.rb'
 require 'pry'
 # require_relative './bin/app/models/user.rb'
