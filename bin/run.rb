@@ -1,16 +1,44 @@
 
 require_relative '../config/environment.rb'
-require 'pry'
-require "tty-prompt"
-require_relative './pre_search_helpers.rb'
-require_relative './post_search_helpers.rb'
+
 # require_relative './bin/app/models/user.rb'
 # require_relative './bin/app/models/pantry_item.rb'
 # require_relative './bin/app/models/cookbook.rb'
 # require_relative './cli_models/getrequester.rb'
 require_all 'lib'
 
-
+puts     
+puts "/A  /A  /A  /A"
+puts "|@| |@| |@| |@|"
+puts "|@| |@| |@| |@|  #    #                          #####     #"
+puts "|@| |@| |@| |@|  #    #                            #       #"
+puts "|@| |@| |@| |@|  #    #   #####   ####             #     #####"
+puts "|@| |@| |@| |@|  #    #  #       #    #            #       #   "
+puts "|@| |@| |@| |@|  #    #   ####   ######            #       #   "
+puts "|@| |@| |@| |@|  #    #       #  #                 #       #    "
+puts "|@| |@| |@| |@|   ####   #####    ####           #####      ###  "
+puts "|@^V=@ V @ V@^| "
+puts " @@@@@@@@@@@@/ "  
+puts "  @@@@@@@@@@/                       ## "          
+puts "   @@@@@@@@/`                      #  # "         
+puts "    ||=@@|/                        #    #  # ###"  
+puts "    ||@@@|                         #    #  ##"     
+puts "    ||@@@|                         #    #  #"      
+puts "    ||@@@|                          #  #   #"      
+puts "    ||@@@|                           ##    #"      
+puts "    ||@@@|  "                                                                       
+puts "    ||@@@|  #                                       #####     #       #"    
+puts "    ||@@@|  #                                         #       #       #"   
+puts "    ||@@@|  #        ####    #####   ####             #     #####     #"   
+puts "    ||@@@|  #       #    #  #       #    #            #       #       #"   
+puts "    ||@@@|  #       #    #   ####   ######            #       #       #"   
+puts "    ||@@@|  #       #    #       #  #                 #       #"           
+puts "    ||@@@|  #####    ####   #####    ####           #####      ###    #"   
+puts "    ||@@@|  "
+puts "    ||@@@|  "
+puts "    ||@@@|  "
+puts "    ||@@@|  "
+puts "   (@@@@@@) "
 
 username = user_name
 
@@ -127,7 +155,7 @@ Cookbook.create_cookbooks(chosen_recipes_aoh, this_user_id)
     
 #         #here, we are taking all of the user recipes and turning them into 
 #         #hashes in form [{"name"=>"string", "website_id"=>integer}]
-cookbook_array_of_hashes = user.recipes_into_aoh
+cookbook_array_of_hashes = this_user.recipes_into_aoh
 
 selected_recipe = cookbook(cookbook_array_of_hashes)
 choice = finalize_cookbook(selected_recipe)
@@ -139,18 +167,9 @@ choice = finalize_cookbook(selected_recipe)
     #pull the website_id from the selected recipe hash
     website_id = selected_recipe["website_id"]
 
-# #then enter that information into the shopping_list 
-# shopping_list(website_id)
-
-# def get_website_id(recipe_array, selected_recipe_name)
-#    recipe_array.each do |recipe| 
-#       if recipe["name"] == selected_recipe_name 
-#          return recipe["website_id"]
-#       end
-#    end
-# end
-
 api_recipe_id = website_id 
+
+
 
 ingredients_by_recipe_id_url = "https://api.spoonacular.com/recipes/#{api_recipe_id}/ingredientWidget.json?apiKey=64dca65eeac74ce69073e6e23ff32ae9"
 instructions_by_recipe_id_url = "https://api.spoonacular.com/recipes/#{api_recipe_id}/analyzedInstructions?apiKey=64dca65eeac74ce69073e6e23ff32ae9"
@@ -222,5 +241,5 @@ def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_fro
    puts "Thank you!"
 end
 
-
+goodbye(selected_recipe["name"], recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
 
