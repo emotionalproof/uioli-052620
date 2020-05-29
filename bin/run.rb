@@ -133,6 +133,7 @@ this_pantry.update(ingredients: new_pantry_string)
 #    results_aoh = result from the recipe search from the API
 uioli_items = uioli_array.join(",")
 
+
 get_recipe_by_ingredients_url = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=64dca65eeac74ce69073e6e23ff32ae9&ingredients=#{uioli_items}&number=10&ranking=2"
 api_recipe_by_ingredients = GetRequester.new(get_recipe_by_ingredients_url).parse_json
 
@@ -171,6 +172,7 @@ Cookbook.create_cookbooks(chosen_recipes_aoh, this_user_id)
 cookbook_array_of_hashes = this_user.recipes_into_aoh
 
 selected_recipe = cookbook(cookbook_array_of_hashes)
+youtube_input = selected_recipe["name"].split(" ").join("+")
 choice = finalize_cookbook(selected_recipe)
     until choice == true
         selected_recipe = cookbook_redo(cookbook_array_of_hashes)
@@ -233,7 +235,7 @@ recipe_source_from_api = get_source_website(api_source_website_by_recipe_id)
 # recipe_name = selected_recipe_hash["name"]
 # recipe_url = selected_recipe_hash["url"]
 #how do I list out the returned ingredients
-def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
+def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api, youtube_input)
    puts
    puts
    puts
@@ -266,11 +268,13 @@ def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_fro
    puts "#{recipe_source_from_api}"
    "#{recipe_instructions_from_api.each {|step| puts step}}"
    puts
+   puts "For more instruction, click this link to watch videos about similar recipes."
+   puts "https://www.youtube.com/results?search_query=#{youtube_input}"
    puts
    puts "Until the next time you fear that you will Lose It..."
    puts "We appreciate you for choosing to Use It."
    puts "Thank you!"
 end
 
-goodbye(selected_recipe["name"], recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
+goodbye(selected_recipe["name"], recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api, youtube_input)
 
