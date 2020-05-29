@@ -8,4 +8,5 @@ gem "pry"
 gem "require_all"
 gem "faker"
 gem 'tty'
+gem 'tty-prompt'
 gem "unicode-display_width", ">= 1.3.3"

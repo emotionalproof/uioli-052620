@@ -107,6 +107,7 @@ DEPENDENCIES
   sinatra-activerecord
   sqlite3 (~> 1.3.6)
   tty
+  tty-prompt
   unicode-display_width (>= 1.3.3)
 
 BUNDLED WITH

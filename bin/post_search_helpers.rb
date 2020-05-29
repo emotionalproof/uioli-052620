@@ -9,7 +9,7 @@ def select_recipes(results_aoh)
     results_aoh.map do |hash|
         choices[hash["name"]] = hash
     end
-    prompt.multi_select("\nWe have the results of your Use It Or Lose It Search!"\
+    prompt.multi_select("\n\n\n\n\n\n\n\n\n\nWe have the results of your Use It Or Lose It Search!"\
     "\n\nWhich of these recipes would you like to"\
         " add to your cookbook?\n\n", choices) 
 end 
@@ -22,7 +22,7 @@ def finalize_recipes(selected_recipes_aoh)
                             recipe_hash["name"]
                             end
     string_recipes = array_recipe_names.join(", ")
-    continue = prompt.yes?("\n\nGreat, you picked:\n\n#{string_recipes}.\n\nIf you would like to"\
+    continue = prompt.yes?("\n\n\n\n\n\n\n\n\n\n\n\n\nGreat, you picked:\n\n#{string_recipes}.\n\nIf you would like to"\
     " add the recipe(s) to your cookbook, enter: Y.\n\nIf you would like"\
     " to re-select your recipes, enter: n")
 end
@@ -33,7 +33,7 @@ def cookbook(cookbook_array_of_hashes)
     cookbook_array_of_hashes.map do |hash|
         choices[hash["name"]] = hash
     end
-    prompt.select("\n\nGreat, you now have some recipes, but, if you've been with us before,"\
+    prompt.select("\n\n\n\n\n\n\n\n\n\n\nGreat, you now have some recipes, but, if you've been with us before,"\
     "\nyou may want to pivot and select something else from your cookbook."\
         "\n\nLet's decide on the one meal we are cooking today so we can make a shopping list:\n\n", choices) 
 end
@@ -44,14 +44,14 @@ def cookbook_redo(cookbook_array_of_hashes)
     cookbook_array_of_hashes.map do |hash|
         choices[hash["name"]] = hash
     end
-    prompt.select("\n\nAlright, let's try this again.\n"\
+    prompt.select("\n\n\n\n\n\n\n\n\n\n\nAlright, let's try this again.\n"\
         "\nLet's decide which recipe you are cooking today so we can make a shopping list:\n\n", choices) 
 end
 
 def finalize_cookbook(selected_recipe_hash)
     prompt = TTY::Prompt.new
     string_recipe = selected_recipe_hash["name"]
-    continue = prompt.yes?("\n\nGreat, you picked:\n\n#{string_recipe}.\n\nIf you would like to"\
+    continue = prompt.yes?("\n\n\n\n\n\n\n\n\n\n\nGreat, you picked:\n\n#{string_recipe}.\n\nIf you would like to"\
     " move onto your Shopping List, enter: Y.\nIf you would like"\
     " to re-select your recipe, enter: n")
 end
