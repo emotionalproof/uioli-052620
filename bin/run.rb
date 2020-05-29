@@ -1,5 +1,5 @@
-# require_relative '../config/environment'
-# require 'pry'
+require_relative '../config/environment'
+require 'pry'
 require "tty-prompt"
 require './bin/cli_models/pre_search_helpers.rb'
 require './bin/cli_models/post_search_helpers.rb'
