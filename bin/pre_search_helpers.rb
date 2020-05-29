@@ -53,7 +53,12 @@ def returning_user_pantry(old_pantry_string)
     "\n\nEnter items here:") do |q|
         q.convert -> (input) { input.downcase.split(/,\s*/).uniq.sort }
       end
-    (old_pantry_array + new_pantry).uniq.sort
+
+      if new_pantry == nil
+        new_pantry = returning_user_pantry(old_pantry_string)
+      end
+      
+      (old_pantry_array + new_pantry).uniq.sort
  end
  
 
