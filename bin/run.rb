@@ -1,6 +1,6 @@
 
 require_relative '../config/environment.rb'
-
+require 'pry'
 # require_relative './bin/app/models/user.rb'
 # require_relative './bin/app/models/pantry_item.rb'
 # require_relative './bin/app/models/cookbook.rb'
@@ -192,85 +192,9 @@ api_ingredients_by_recipe_id = GetRequester.new(ingredients_by_recipe_id_url).pa
 api_instructions_by_recipe_id = GetRequester.new(instructions_by_recipe_id_url).parse_json
 api_source_website_by_recipe_id = GetRequester.new(source_website_by_recipe_id_url).parse_json
 
-
-def get_recipe_ingredients(api_ingredients_by_recipe_id)
-   array = [] 
-   api_get = api_ingredients_by_recipe_id
-    api_get["ingredients"].each do |ingredient| 
-        array << "#{ingredient["amount"]["us"]["value"]} #{ingredient["amount"]["us"]["unit"]} of #{ingredient["name"]}"
-    end
-    array
-end
-
 recipe_ingredients_from_api = get_recipe_ingredients(api_ingredients_by_recipe_id)
-
-
-def get_recipe_instructions(api_instructions_by_recipe_id)
-    instructions_array = []
-    api_get = api_instructions_by_recipe_id
-    api_get.reverse.each do |instruction|
-        instruction["steps"].each do |step|
-            instructions_array << step["step"]
-        end
-    end
-    instructions_array
-end
-
 recipe_instructions_from_api = get_recipe_instructions(api_instructions_by_recipe_id)
-
-
-
-def get_source_website(api_source_website_by_recipe_id)
-    api_get = api_source_website_by_recipe_id
-    "You can read the full recipe and detailed instructions at #{api_get["sourceUrl"]}"
-end
-
 recipe_source_from_api = get_source_website(api_source_website_by_recipe_id)
-
-
-
-
-# recipe_name = selected_recipe_hash["name"]
-# recipe_url = selected_recipe_hash["url"]
-#how do I list out the returned ingredients
-def goodbye(selected_recipe_name, recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts
-   puts "Great! You are about to cook #{selected_recipe_name}!"
-   puts 
-   puts "Use It Or Lose It! will try to utilize all of the ingredients on your chopping block"
-   puts "but you may need more items before you are chowing down on #{selected_recipe_name}."
-   puts
-   puts "Below, you will find a complete list of ingredients(with quantities)"
-   puts "as well as instructions on how to prepare, cook, and serve this amazing dish."
-   puts
-   puts "INGREDIENTS:"
-   "#{recipe_ingredients_from_api.each {|item| puts item}}"
-   puts
-   puts "INSTRUCTIONS"
-   puts "#{recipe_source_from_api}"
-   "#{recipe_instructions_from_api.each {|step| puts step}}"
-   puts
-   puts
-   puts "Until the next time you fear that you will Lose It..."
-   puts "We appreciate you for choosing to Use It."
-   puts "Thank you!"
-end
 
 goodbye(selected_recipe["name"], recipe_ingredients_from_api, recipe_source_from_api, recipe_instructions_from_api)
 
